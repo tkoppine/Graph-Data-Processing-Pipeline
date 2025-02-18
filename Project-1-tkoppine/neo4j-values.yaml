@@ -4,7 +4,7 @@ neo4j:
   resources:
     cpu: "1"
     memory: "2Gi"
-  #assign password for neo4j as project1phase2
+  #assign password for neo4j
   password: "enter your pwd here"
 
 #assign environment variables neo4j plugins as graph-data-science

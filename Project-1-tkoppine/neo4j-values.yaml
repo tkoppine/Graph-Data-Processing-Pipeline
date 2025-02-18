@@ -1,0 +1,24 @@
+neo4j:
+  #assign neo4j-standalone with cpu as 1 and memory 2gi
+  name: neo4j-standalone
+  resources:
+    cpu: "1"
+    memory: "2Gi"
+  #assign password for neo4j as project1phase2
+  password: "enter your pwd here"
+
+#assign environment variables neo4j plugins as graph-data-science
+env:
+  NEO4J_PLUGINS: '["graph-data-science"]'
+
+#assign configuration settings
+config:
+  dbms.security.procedures.unrestricted: "gds.*,apoc.*"
+
+#assign volumes mode defaultstorageclass with storage 2gi
+volumes:
+  data:
+    mode: defaultStorageClass
+    defaultStorageClass:
+      requests:
+        storage: 2Gi

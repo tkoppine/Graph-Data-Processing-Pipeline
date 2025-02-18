@@ -1,0 +1,61 @@
+#initialize service code for kafka-neo4j-connector
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-neo4j-connector
+spec:
+  selector:
+    app: kafka-neo4j-connector
+  ports:
+    #assign tcp ports as 8083
+    - protocol: TCP
+      port: 8083
+      targetPort: 8083
+---
+#initialize deployment code for kafka-neo4j-connector
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-neo4j-connector
+  labels:
+    app: kafka-neo4j-connector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-neo4j-connector
+  template:
+    metadata:
+      labels:
+        app: kafka-neo4j-connector
+    spec:
+      containers:
+        - name: kafka-neo4j-connector
+          #pull image from kafka-neo4j-connect if it not present
+          image: veedata/kafka-neo4j-connect:latest2
+          imagePullPolicy: IfNotPresent
+          #assign containerport as 8083
+          ports:
+            - containerPort: 8083
+          #assign environmental variables
+          env:
+            #assign kafka_topic as "nyc_taxicab_data"
+            - name: KAFKA_TOPIC
+              value: "nyc_taxicab_data"
+            #assign kafka_broker as kafka-service with port 29092
+            - name: KAFKA_BROKER
+              value: "kafka-service:29092"
+            #assign neo4j uri
+            - name: NEO4J_URI
+              value: "bolt://neo4j-standalone.default.svc.cluster.local:7687"
+            #assign neo4j usrname
+            - name: NEO4J_USERNAME
+              value: "neo4j"
+            #assign neo4j pwd
+            - name: NEO4J_PASSWORD
+              value: "enter your pwd here"
+          #assign resources with cpu 1 and memory 2gb
+          resources:
+            limits:
+              cpu: "1000m"
+              memory: "2000Mi"

@@ -24,7 +24,7 @@ WORKDIR /cse511
 RUN wget -O yellow_tripdata_2022-03.parquet https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2022-03.parquet
 
 # Extracting the data_loader.py file from git hub to /cse511 (directory)
-RUN git clone https://accesstokenkey@github.com/Fall-24-CSE511-Data-Processing-at-Scale/Project-1-tkoppine.git 
+RUN git clone https://accesstokenkey@github.com/yourpath.git 
 
 # First upgrade pip and later downloading neo4j pandas pyarrow
 RUN python3 -m pip install --upgrade pip && \
